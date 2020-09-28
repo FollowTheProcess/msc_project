@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>src.models.model API documentation</title>
+<meta name="description" content="Refactored final model implementation …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.models.model</code></h1>
+</header>
+<section id="section-intro">
+<p>Refactored final model implementation.</p>
+<p>Author: Tom Fleet
+Created: 23/06/2020</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Refactored final model implementation.
+
+Author: Tom Fleet
+Created: 23/06/2020
+&#34;&#34;&#34;
+
+from pathlib import Path
+from typing import BinaryIO, List, Tuple
+
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+from src.config import MODEL_PARAMS, PROJECT_ROOT
+
+
+class NotTrainedError(BaseException):
+    # Custom exception to warn of innapropriate actions on an untrained model.
+
+    def __init__(
+        self, message=&#34;The model is not yet trained, run Model.train and try again&#34;
+    ):
+        self.message = message
+        super().__init__(self.message)
+
+
+class CrackDepthPredictor:
+    &#34;&#34;&#34;
+    Class implementation of the final chosen model.
+    3rd Degree polynomial ridge regressor.
+
+    Trains on the entire original data set.
+
+    Also provides API for testing the model against new data in the future as well as cross validation.
+    &#34;&#34;&#34;
+
+    # Collect model params from config file to avoid hardcoding
+    # Also avoids relying on defaults for futureproofing
+    params = MODEL_PARAMS
+
+    def __init__(self):
+
+        self.model = None
+        self.preprocessor = None
+        self.is_trained = False
+
+    def __repr__(self):
+        return f&#34;Crack Depth Prediction Model: Trained = {self.is_trained}, Params = {self.params}&#34;
+
+    def preprocess_training_data(
+        self, df: pd.DataFrame
+    ) -&gt; Tuple[np.ndarray, np.ndarray]:
+        &#34;&#34;&#34;
+        Applies custom transformer pipelines required by the model to the training data.
+
+        Use this method only when training the model for the first time.
+
+        When generating predictions using a pre-trained (e.g. joblib) model, use preprocess_unseen_data
+
+        Args:
+            df (pd.DataFrame): Dataframe containing the experimental data in the form:
+
+            | x | temp | nf_hz | amp_mm | tc_act |
+            ---------------------------------------
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+        Usage:
+            model = Model()
+
+            X_train, y_train = model.preprocess_training_data(df)
+        &#34;&#34;&#34;
+
+        # Shuffle the data to prevent model weirdness
+        df_shuf = df.sample(frac=1)
+
+        self.preprocessor = Pipeline(
+            [
+                (&#34;polynomialise&#34;, PolynomialFeatures(degree=3, include_bias=False)),
+                (&#34;scaler&#34;, StandardScaler()),
+            ]
+        )
+
+        X_train = self.preprocessor.fit_transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+        y_train = df_shuf[&#34;tc_act&#34;]
+
+        return X_train, y_train
+
+    def train(self, X: np.ndarray, y: np.ndarray) -&gt; None:
+        &#34;&#34;&#34;
+        Trains the instantiated model on X and Y arrays
+
+        Args:
+            X (np.ndarray): Feature array
+            y (np.ndarray): Target array
+
+        Returns:
+            [None]: Returns none
+        &#34;&#34;&#34;
+
+        self.model = Ridge(**self.params)
+        self.model.fit(X, y)
+
+        # Used for the following stages and for the custom exception
+        self.is_trained = True
+
+        return None
+
+    def preprocess_unseen_data(self, df: pd.DataFrame) -&gt; Tuple[np.ndarray, np.ndarray]:
+        &#34;&#34;&#34;
+        Applies custom transformer pipelines required by the model to the training data.
+
+        Use this method only when testing the pre-trained (e.g. joblib) model.
+
+        When training the model for the first time, use preprocess_unseen_data
+
+        Args:
+            df (pd.DataFrame): Dataframe containing experimental data in the form
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+        Usage:
+
+            X_test, y_test = model.preprocess_unseen_data(df)
+        &#34;&#34;&#34;
+
+        # Again, shuffle the data to prevent weirdness
+        df_shuf = df.sample(frac=1)
+
+        X_test = self.preprocessor.transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+        y_test = df_shuf[&#34;tc_act&#34;]
+
+        return X_test, y_test
+
+    def predict(self, X: np.ndarray) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Generates an array of predictions from the feature array X
+
+        Args:
+            X (np.ndarray): Array of features
+
+        Raises:
+            NotTrainedError: If attempting to predict using an untrained model, will raise NotTrainedError.
+
+        Returns:
+            np.ndarray: Array of predictions
+        &#34;&#34;&#34;
+
+        if self.is_trained:
+            return self.model.predict(X)
+        else:
+            raise NotTrainedError()
+
+    def test(
+        self, y_test: np.ndarray, y_pred: np.ndarray
+    ) -&gt; Tuple[np.float64, np.float64]:
+        &#34;&#34;&#34;
+        Tests the models performance using root mean squared error and r2 score
+
+        Args:
+            y_test (np.ndarray): True target labels
+            y_pred (np.ndarray): Model generated predictions
+
+        Returns:
+            Tuple[np.float64, np.float64]: Tuple of [rmse, r2_score]
+        &#34;&#34;&#34;
+
+        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+        r2 = r2_score(y_test, y_pred)
+
+        print(f&#34;RMSE: {np.round(rmse, 3)}&#34;)
+        print(f&#34;R^2: {np.round(r2, 3)}&#34;)
+
+        return rmse, r2
+
+    def cross_validate(
+        self, X: np.ndarray, y: np.ndarray, cv: int = 5
+    ) -&gt; List[np.float64]:
+        &#34;&#34;&#34;
+        Performs k-fold cross validation to evaluate the rmse of the trained model instance.
+
+        Args:
+            X (np.ndarray): Feature array, e.g. X_train
+            y (np.ndarray): Target array, e.g. y_train
+            cv (int, optional): Number of folds for the k-fold validation. Defaults to 5.
+
+        Returns:
+            List[np.float64]: List of RMSE scores of length = cv
+        &#34;&#34;&#34;
+
+        val_rmses = np.sqrt(
+            cross_val_score(self.model, X, y, scoring=&#34;neg_mean_squared_error&#34;) * -1
+        )
+
+        return val_rmses
+
+    def save(self, file_name: str) -&gt; BinaryIO:
+        &#34;&#34;&#34;
+        Saves a trained model to a pkl file in Models/
+
+        Args:
+            file_name (str): File name for saved model. Must be valid pkl e.g. my_model.pkl
+
+        Raises:
+            NotTrainedError: If attempting to save an untrained model, will raise NotTrainedError.
+
+        Returns:
+            BinaryIO: Saves model to Models/
+        &#34;&#34;&#34;
+
+        path = PROJECT_ROOT / &#34;Models&#34;
+
+        if self.is_trained:
+            if not Path.exists(path / file_name):
+                joblib.dump(self, path / file_name)
+            else:
+                print(f&#34;Model {file_name} already exists&#34;)
+        else:
+            raise NotTrainedError()
+
+        return None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.models.model.CrackDepthPredictor"><code class="flex name class">
+<span>class <span class="ident">CrackDepthPredictor</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Class implementation of the final chosen model.
+3rd Degree polynomial ridge regressor.</p>
+<p>Trains on the entire original data set.</p>
+<p>Also provides API for testing the model against new data in the future as well as cross validation.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CrackDepthPredictor:
+    &#34;&#34;&#34;
+    Class implementation of the final chosen model.
+    3rd Degree polynomial ridge regressor.
+
+    Trains on the entire original data set.
+
+    Also provides API for testing the model against new data in the future as well as cross validation.
+    &#34;&#34;&#34;
+
+    # Collect model params from config file to avoid hardcoding
+    # Also avoids relying on defaults for futureproofing
+    params = MODEL_PARAMS
+
+    def __init__(self):
+
+        self.model = None
+        self.preprocessor = None
+        self.is_trained = False
+
+    def __repr__(self):
+        return f&#34;Crack Depth Prediction Model: Trained = {self.is_trained}, Params = {self.params}&#34;
+
+    def preprocess_training_data(
+        self, df: pd.DataFrame
+    ) -&gt; Tuple[np.ndarray, np.ndarray]:
+        &#34;&#34;&#34;
+        Applies custom transformer pipelines required by the model to the training data.
+
+        Use this method only when training the model for the first time.
+
+        When generating predictions using a pre-trained (e.g. joblib) model, use preprocess_unseen_data
+
+        Args:
+            df (pd.DataFrame): Dataframe containing the experimental data in the form:
+
+            | x | temp | nf_hz | amp_mm | tc_act |
+            ---------------------------------------
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+        Usage:
+            model = Model()
+
+            X_train, y_train = model.preprocess_training_data(df)
+        &#34;&#34;&#34;
+
+        # Shuffle the data to prevent model weirdness
+        df_shuf = df.sample(frac=1)
+
+        self.preprocessor = Pipeline(
+            [
+                (&#34;polynomialise&#34;, PolynomialFeatures(degree=3, include_bias=False)),
+                (&#34;scaler&#34;, StandardScaler()),
+            ]
+        )
+
+        X_train = self.preprocessor.fit_transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+        y_train = df_shuf[&#34;tc_act&#34;]
+
+        return X_train, y_train
+
+    def train(self, X: np.ndarray, y: np.ndarray) -&gt; None:
+        &#34;&#34;&#34;
+        Trains the instantiated model on X and Y arrays
+
+        Args:
+            X (np.ndarray): Feature array
+            y (np.ndarray): Target array
+
+        Returns:
+            [None]: Returns none
+        &#34;&#34;&#34;
+
+        self.model = Ridge(**self.params)
+        self.model.fit(X, y)
+
+        # Used for the following stages and for the custom exception
+        self.is_trained = True
+
+        return None
+
+    def preprocess_unseen_data(self, df: pd.DataFrame) -&gt; Tuple[np.ndarray, np.ndarray]:
+        &#34;&#34;&#34;
+        Applies custom transformer pipelines required by the model to the training data.
+
+        Use this method only when testing the pre-trained (e.g. joblib) model.
+
+        When training the model for the first time, use preprocess_unseen_data
+
+        Args:
+            df (pd.DataFrame): Dataframe containing experimental data in the form
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+        Usage:
+
+            X_test, y_test = model.preprocess_unseen_data(df)
+        &#34;&#34;&#34;
+
+        # Again, shuffle the data to prevent weirdness
+        df_shuf = df.sample(frac=1)
+
+        X_test = self.preprocessor.transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+        y_test = df_shuf[&#34;tc_act&#34;]
+
+        return X_test, y_test
+
+    def predict(self, X: np.ndarray) -&gt; np.ndarray:
+        &#34;&#34;&#34;
+        Generates an array of predictions from the feature array X
+
+        Args:
+            X (np.ndarray): Array of features
+
+        Raises:
+            NotTrainedError: If attempting to predict using an untrained model, will raise NotTrainedError.
+
+        Returns:
+            np.ndarray: Array of predictions
+        &#34;&#34;&#34;
+
+        if self.is_trained:
+            return self.model.predict(X)
+        else:
+            raise NotTrainedError()
+
+    def test(
+        self, y_test: np.ndarray, y_pred: np.ndarray
+    ) -&gt; Tuple[np.float64, np.float64]:
+        &#34;&#34;&#34;
+        Tests the models performance using root mean squared error and r2 score
+
+        Args:
+            y_test (np.ndarray): True target labels
+            y_pred (np.ndarray): Model generated predictions
+
+        Returns:
+            Tuple[np.float64, np.float64]: Tuple of [rmse, r2_score]
+        &#34;&#34;&#34;
+
+        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+        r2 = r2_score(y_test, y_pred)
+
+        print(f&#34;RMSE: {np.round(rmse, 3)}&#34;)
+        print(f&#34;R^2: {np.round(r2, 3)}&#34;)
+
+        return rmse, r2
+
+    def cross_validate(
+        self, X: np.ndarray, y: np.ndarray, cv: int = 5
+    ) -&gt; List[np.float64]:
+        &#34;&#34;&#34;
+        Performs k-fold cross validation to evaluate the rmse of the trained model instance.
+
+        Args:
+            X (np.ndarray): Feature array, e.g. X_train
+            y (np.ndarray): Target array, e.g. y_train
+            cv (int, optional): Number of folds for the k-fold validation. Defaults to 5.
+
+        Returns:
+            List[np.float64]: List of RMSE scores of length = cv
+        &#34;&#34;&#34;
+
+        val_rmses = np.sqrt(
+            cross_val_score(self.model, X, y, scoring=&#34;neg_mean_squared_error&#34;) * -1
+        )
+
+        return val_rmses
+
+    def save(self, file_name: str) -&gt; BinaryIO:
+        &#34;&#34;&#34;
+        Saves a trained model to a pkl file in Models/
+
+        Args:
+            file_name (str): File name for saved model. Must be valid pkl e.g. my_model.pkl
+
+        Raises:
+            NotTrainedError: If attempting to save an untrained model, will raise NotTrainedError.
+
+        Returns:
+            BinaryIO: Saves model to Models/
+        &#34;&#34;&#34;
+
+        path = PROJECT_ROOT / &#34;Models&#34;
+
+        if self.is_trained:
+            if not Path.exists(path / file_name):
+                joblib.dump(self, path / file_name)
+            else:
+                print(f&#34;Model {file_name} already exists&#34;)
+        else:
+            raise NotTrainedError()
+
+        return None</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="src.models.model.CrackDepthPredictor.params"><code class="name">var <span class="ident">params</span></code></dt>
+<dd>
+<section class="desc"><p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+(key, value) pairs
+dict(iterable) -&gt; new dictionary initialized as if via:
+d = {}
+for k, v in iterable:
+d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+in the keyword argument list.
+For example:
+dict(one=1, two=2)</p></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="src.models.model.CrackDepthPredictor.cross_validate"><code class="name flex">
+<span>def <span class="ident">cross_validate</span></span>(<span>self, X, y, cv=5)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Performs k-fold cross validation to evaluate the rmse of the trained model instance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>X</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Feature array, e.g. X_train</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Target array, e.g. y_train</dd>
+<dt><strong><code>cv</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Number of folds for the k-fold validation. Defaults to 5.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List</code>[<code>np.float64</code>]: <code>List</code> of <code>RMSE</code> <code>scores</code> of <code>length</code> = <code>cv</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cross_validate(
+    self, X: np.ndarray, y: np.ndarray, cv: int = 5
+) -&gt; List[np.float64]:
+    &#34;&#34;&#34;
+    Performs k-fold cross validation to evaluate the rmse of the trained model instance.
+
+    Args:
+        X (np.ndarray): Feature array, e.g. X_train
+        y (np.ndarray): Target array, e.g. y_train
+        cv (int, optional): Number of folds for the k-fold validation. Defaults to 5.
+
+    Returns:
+        List[np.float64]: List of RMSE scores of length = cv
+    &#34;&#34;&#34;
+
+    val_rmses = np.sqrt(
+        cross_val_score(self.model, X, y, scoring=&#34;neg_mean_squared_error&#34;) * -1
+    )
+
+    return val_rmses</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.predict"><code class="name flex">
+<span>def <span class="ident">predict</span></span>(<span>self, X)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Generates an array of predictions from the feature array X</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>X</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Array of features</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><strong><a title="src.models.model.NotTrainedError" href="#src.models.model.NotTrainedError"><code>NotTrainedError</code></a></strong></dt>
+<dd>If attempting to predict using an untrained model, will raise NotTrainedError.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray</code>: <code>Array</code> of <code>predictions</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def predict(self, X: np.ndarray) -&gt; np.ndarray:
+    &#34;&#34;&#34;
+    Generates an array of predictions from the feature array X
+
+    Args:
+        X (np.ndarray): Array of features
+
+    Raises:
+        NotTrainedError: If attempting to predict using an untrained model, will raise NotTrainedError.
+
+    Returns:
+        np.ndarray: Array of predictions
+    &#34;&#34;&#34;
+
+    if self.is_trained:
+        return self.model.predict(X)
+    else:
+        raise NotTrainedError()</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.preprocess_training_data"><code class="name flex">
+<span>def <span class="ident">preprocess_training_data</span></span>(<span>self, df)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Applies custom transformer pipelines required by the model to the training data.</p>
+<p>Use this method only when training the model for the first time.</p>
+<p>When generating predictions using a pre-trained (e.g. joblib) model, use preprocess_unseen_data</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pd.DataFrame</code></dt>
+<dd>Dataframe containing the experimental data in the form:</dd>
+</dl>
+<h2 id="x-temp-nf_hz-amp_mm-tc_act">| x | temp | nf_hz | amp_mm | tc_act |</h2>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Tuple</code>[<code>np.ndarray</code>, <code>np.ndarray</code>]: <code>Tuple</code> of [<code>feature_array</code>, <code>target_array</code>]</dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="usage">Usage</h2>
+<p>model = Model()</p>
+<p>X_train, y_train = model.preprocess_training_data(df)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preprocess_training_data(
+    self, df: pd.DataFrame
+) -&gt; Tuple[np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;
+    Applies custom transformer pipelines required by the model to the training data.
+
+    Use this method only when training the model for the first time.
+
+    When generating predictions using a pre-trained (e.g. joblib) model, use preprocess_unseen_data
+
+    Args:
+        df (pd.DataFrame): Dataframe containing the experimental data in the form:
+
+        | x | temp | nf_hz | amp_mm | tc_act |
+        ---------------------------------------
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+    Usage:
+        model = Model()
+
+        X_train, y_train = model.preprocess_training_data(df)
+    &#34;&#34;&#34;
+
+    # Shuffle the data to prevent model weirdness
+    df_shuf = df.sample(frac=1)
+
+    self.preprocessor = Pipeline(
+        [
+            (&#34;polynomialise&#34;, PolynomialFeatures(degree=3, include_bias=False)),
+            (&#34;scaler&#34;, StandardScaler()),
+        ]
+    )
+
+    X_train = self.preprocessor.fit_transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+    y_train = df_shuf[&#34;tc_act&#34;]
+
+    return X_train, y_train</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.preprocess_unseen_data"><code class="name flex">
+<span>def <span class="ident">preprocess_unseen_data</span></span>(<span>self, df)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Applies custom transformer pipelines required by the model to the training data.</p>
+<p>Use this method only when testing the pre-trained (e.g. joblib) model.</p>
+<p>When training the model for the first time, use preprocess_unseen_data</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pd.DataFrame</code></dt>
+<dd>Dataframe containing experimental data in the form</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Tuple</code>[<code>np.ndarray</code>, <code>np.ndarray</code>]: <code>Tuple</code> of [<code>feature_array</code>, <code>target_array</code>]</dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="usage">Usage</h2>
+<p>X_test, y_test = model.preprocess_unseen_data(df)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preprocess_unseen_data(self, df: pd.DataFrame) -&gt; Tuple[np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;
+    Applies custom transformer pipelines required by the model to the training data.
+
+    Use this method only when testing the pre-trained (e.g. joblib) model.
+
+    When training the model for the first time, use preprocess_unseen_data
+
+    Args:
+        df (pd.DataFrame): Dataframe containing experimental data in the form
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: Tuple of [feature_array, target_array]
+
+    Usage:
+
+        X_test, y_test = model.preprocess_unseen_data(df)
+    &#34;&#34;&#34;
+
+    # Again, shuffle the data to prevent weirdness
+    df_shuf = df.sample(frac=1)
+
+    X_test = self.preprocessor.transform(df_shuf.drop(&#34;tc_act&#34;, axis=1))
+    y_test = df_shuf[&#34;tc_act&#34;]
+
+    return X_test, y_test</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.save"><code class="name flex">
+<span>def <span class="ident">save</span></span>(<span>self, file_name)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Saves a trained model to a pkl file in Models/</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>File name for saved model. Must be valid pkl e.g. my_model.pkl</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><strong><a title="src.models.model.NotTrainedError" href="#src.models.model.NotTrainedError"><code>NotTrainedError</code></a></strong></dt>
+<dd>If attempting to save an untrained model, will raise NotTrainedError.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>BinaryIO</code></strong></dt>
+<dd>Saves model to Models/</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save(self, file_name: str) -&gt; BinaryIO:
+    &#34;&#34;&#34;
+    Saves a trained model to a pkl file in Models/
+
+    Args:
+        file_name (str): File name for saved model. Must be valid pkl e.g. my_model.pkl
+
+    Raises:
+        NotTrainedError: If attempting to save an untrained model, will raise NotTrainedError.
+
+    Returns:
+        BinaryIO: Saves model to Models/
+    &#34;&#34;&#34;
+
+    path = PROJECT_ROOT / &#34;Models&#34;
+
+    if self.is_trained:
+        if not Path.exists(path / file_name):
+            joblib.dump(self, path / file_name)
+        else:
+            print(f&#34;Model {file_name} already exists&#34;)
+    else:
+        raise NotTrainedError()
+
+    return None</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.test"><code class="name flex">
+<span>def <span class="ident">test</span></span>(<span>self, y_test, y_pred)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Tests the models performance using root mean squared error and r2 score</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>y_test</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>True target labels</dd>
+<dt><strong><code>y_pred</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Model generated predictions</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Tuple</code>[<code>np.float64</code>, <code>np.float64</code>]: <code>Tuple</code> of [<code>rmse</code>, <code>r2_score</code>]</dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test(
+    self, y_test: np.ndarray, y_pred: np.ndarray
+) -&gt; Tuple[np.float64, np.float64]:
+    &#34;&#34;&#34;
+    Tests the models performance using root mean squared error and r2 score
+
+    Args:
+        y_test (np.ndarray): True target labels
+        y_pred (np.ndarray): Model generated predictions
+
+    Returns:
+        Tuple[np.float64, np.float64]: Tuple of [rmse, r2_score]
+    &#34;&#34;&#34;
+
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    print(f&#34;RMSE: {np.round(rmse, 3)}&#34;)
+    print(f&#34;R^2: {np.round(r2, 3)}&#34;)
+
+    return rmse, r2</code></pre>
+</details>
+</dd>
+<dt id="src.models.model.CrackDepthPredictor.train"><code class="name flex">
+<span>def <span class="ident">train</span></span>(<span>self, X, y)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Trains the instantiated model on X and Y arrays</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>X</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Feature array</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>Target array</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>[None]: Returns none</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train(self, X: np.ndarray, y: np.ndarray) -&gt; None:
+    &#34;&#34;&#34;
+    Trains the instantiated model on X and Y arrays
+
+    Args:
+        X (np.ndarray): Feature array
+        y (np.ndarray): Target array
+
+    Returns:
+        [None]: Returns none
+    &#34;&#34;&#34;
+
+    self.model = Ridge(**self.params)
+    self.model.fit(X, y)
+
+    # Used for the following stages and for the custom exception
+    self.is_trained = True
+
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.models.model.NotTrainedError"><code class="flex name class">
+<span>class <span class="ident">NotTrainedError</span></span>
+<span>(</span><span>message='The model is not yet trained, run Model.train and try again')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Common base class for all exceptions</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NotTrainedError(BaseException):
+    # Custom exception to warn of innapropriate actions on an untrained model.
+
+    def __init__(
+        self, message=&#34;The model is not yet trained, run Model.train and try again&#34;
+    ):
+        self.message = message
+        super().__init__(self.message)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.models" href="index.html">src.models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.models.model.CrackDepthPredictor" href="#src.models.model.CrackDepthPredictor">CrackDepthPredictor</a></code></h4>
+<ul class="">
+<li><code><a title="src.models.model.CrackDepthPredictor.cross_validate" href="#src.models.model.CrackDepthPredictor.cross_validate">cross_validate</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.params" href="#src.models.model.CrackDepthPredictor.params">params</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.predict" href="#src.models.model.CrackDepthPredictor.predict">predict</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.preprocess_training_data" href="#src.models.model.CrackDepthPredictor.preprocess_training_data">preprocess_training_data</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.preprocess_unseen_data" href="#src.models.model.CrackDepthPredictor.preprocess_unseen_data">preprocess_unseen_data</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.save" href="#src.models.model.CrackDepthPredictor.save">save</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.test" href="#src.models.model.CrackDepthPredictor.test">test</a></code></li>
+<li><code><a title="src.models.model.CrackDepthPredictor.train" href="#src.models.model.CrackDepthPredictor.train">train</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.models.model.NotTrainedError" href="#src.models.model.NotTrainedError">NotTrainedError</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

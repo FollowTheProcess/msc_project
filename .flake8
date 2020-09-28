@@ -1,0 +1,16 @@
+[flake8]
+ignore =
+    # Line break before binary operator (doesn't like black formatted pathlib)
+    W503
+max-line-length = 120
+exclude =
+    tests/*,
+    .git,
+    __pycache__,
+    .pytest_cache,
+    .ipynb_checkpoints,
+    *.egg-info,
+    .env,
+    Docs,
+
+max-complexity = 10

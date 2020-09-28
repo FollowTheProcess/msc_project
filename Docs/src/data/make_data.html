@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>src.data.make_data API documentation</title>
+<meta name="description" content="Single script that when run, will: …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.data.make_data</code></h1>
+</header>
+<section id="section-intro">
+<p>Single script that when run, will:</p>
+<p>1) Extract the raw data from the two excel files in Data/Raw: Al_Nat_Freq.xlsx and Al_Amplitude.xlsx
+2) Convert that data to tidy format required for modelling
+3) Replicate the polynomial model from the paper and append the predictions to the data
+4) Do the required formatting for final modelling</p>
+<h2 id="required-inputs">Required Inputs</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>Data</code>/<code>Raw</code>/<code>Al_Nat_Freq.xlsx</code>
+&lt;- <code>Excel</code> <code>file</code> <code>containing</code> <code>raw</code> <code>frequency</code> <code>data</code> (<code>provided</code> <code>at</code> <code>start</code> of <code>project</code>)</dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>file</code></strong> :&ensp;<code>Data</code>/<code>Raw</code>/<code>Al_Amplitude.xlsx</code>
+&lt;- <code>Excel</code> <code>file</code> <code>containing</code> <code>raw</code> <code>amplitude</code> <code>data</code> (<code>provided</code> <code>at</code> <code>start</code> of <code>project</code>)</dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="outputs">Outputs</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>Data</code>/<code>Processed</code>/<code>processed_combined.csv</code>
+&lt;- <code>File</code> <code>with</code> <code>all</code> <code>observations</code> <code>from</code> <code>raw</code> <code>data</code> <code>in</code> <code>"tidy"</code> <code>format</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>file</code></strong> :&ensp;<code>Data</code>/<code>Processed</code>/<code>full_with_poly_preds.csv</code>
+&lt;- <code>File</code> <code>with</code> <code>all</code> <code>observations</code> <code>plus</code> <code>predictions</code> <code>from</code></dt>
+<dd>the paper's polynomial model</dd>
+<dt><strong><code>file</code></strong> :&ensp;<code>Data</code>/<code>Final</code>/<code>al_data_final.csv</code>
+&lt;- <code>File</code> <code>with</code> <code>final</code> <code>format</code> <code>for</code> <code>input</code> <code>to</code> <code>modelling</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>Author</code></strong> :&ensp;<code>Tom</code> <code>Fleet</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>Created</code></strong> :&ensp;<code>10</code>/<code>06</code>/<code>2020</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Single script that when run, will:
+
+1) Extract the raw data from the two excel files in Data/Raw: Al_Nat_Freq.xlsx and Al_Amplitude.xlsx
+2) Convert that data to tidy format required for modelling
+3) Replicate the polynomial model from the paper and append the predictions to the data
+4) Do the required formatting for final modelling
+
+Required Inputs
+---------
+file: Data/Raw/Al_Nat_Freq.xlsx   &lt;- Excel file containing raw frequency data (provided at start of project)
+file: Data/Raw/Al_Amplitude.xlsx  &lt;- Excel file containing raw amplitude data (provided at start of project)
+
+Outputs
+---------
+file: Data/Processed/processed_combined.csv  &lt;- File with all observations from raw data in &#34;tidy&#34; format
+file: Data/Processed/full_with_poly_preds.csv  &lt;- File with all observations plus predictions from
+                                                    the paper&#39;s polynomial model
+file: Data/Final/al_data_final.csv   &lt;- File with final format for input to modelling
+
+Author: Tom Fleet
+Created: 10/06/2020
+&#34;&#34;&#34;
+
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import PolynomialFeatures
+
+from src.config import FINAL_DATA, PROCESSED_DATA, RAW_DATA
+from src.data.df_utils import process_data_final
+
+amp_path = RAW_DATA / &#34;Al_Amplitude.xlsx&#34;
+freq_path = RAW_DATA / &#34;Al_Nat_Freq.xlsx&#34;
+
+# Because the data is on sheets with different names
+amp_sheet = &#34;Summary drop&#34;
+freq_sheet = &#34;Drop summary&#34;
+
+# Sets the rows to skip at the start for each set of data in order to grab the correct chunk
+skip_rows5 = [0, 1]
+skip_rows15 = list(range(18))
+skip_rows25 = list(range(35))
+# Number of rows per chunk is the same for all the excel files
+n_rows = 12
+
+# Sets the columns to either ignore or load depending on what features we want
+# Since the sheets are formatted the same, we can either select:
+# Values (frequency or amplitude) or &#39;drops&#39; (frequency or amplitude drop)
+val_cols = [0, 3, 4, 6, 8, 10, 12]
+drop_cols = [0, 4, 5, 7, 9, 11, 13]
+
+# Chunks of amplitude data
+# 5mm crack position
+amp5_vals = pd.read_excel(
+    amp_path, sheet_name=amp_sheet, skiprows=skip_rows5, nrows=n_rows, usecols=val_cols
+)
+
+assert amp5_vals.shape == (12, 7)
+
+# 15mm crack position
+amp15_vals = pd.read_excel(
+    amp_path, sheet_name=amp_sheet, skiprows=skip_rows15, nrows=n_rows, usecols=val_cols
+)
+
+assert amp15_vals.shape == (12, 7)
+
+# 25mm crack position
+amp25_vals = pd.read_excel(
+    amp_path, sheet_name=amp_sheet, skiprows=skip_rows25, nrows=n_rows, usecols=val_cols
+)
+
+assert amp25_vals.shape == (12, 7)
+
+# Chunks of frequency data
+# 5mm crack position
+freq5_vals = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows5,
+    nrows=n_rows,
+    usecols=val_cols,
+)
+
+assert freq5_vals.shape == (12, 7)
+
+# 15mm crack position
+freq15_vals = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows15,
+    nrows=n_rows,
+    usecols=val_cols,
+)
+
+assert freq15_vals.shape == (12, 7)
+
+# 25mm crack position
+freq25_vals = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows25,
+    nrows=n_rows,
+    usecols=val_cols,
+)
+
+assert freq25_vals.shape == (12, 7)
+
+# Chunks of amplitude drop data
+# 5mm crack position
+amp5_drops = pd.read_excel(
+    amp_path, sheet_name=amp_sheet, skiprows=skip_rows5, nrows=n_rows, usecols=drop_cols
+)
+
+assert amp5_drops.shape == (12, 7)
+
+# 15mm crack position
+amp15_drops = pd.read_excel(
+    amp_path,
+    sheet_name=amp_sheet,
+    skiprows=skip_rows15,
+    nrows=n_rows,
+    usecols=drop_cols,
+)
+
+assert amp15_drops.shape == (12, 7)
+
+# 25mm crack position
+amp25_drops = pd.read_excel(
+    amp_path,
+    sheet_name=amp_sheet,
+    skiprows=skip_rows25,
+    nrows=n_rows,
+    usecols=drop_cols,
+)
+
+assert amp25_drops.shape == (12, 7)
+
+
+# Chunks of frequency drop data
+# 5mm crack position
+freq5_drops = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows5,
+    nrows=n_rows,
+    usecols=drop_cols,
+)
+
+assert freq5_drops.shape == (12, 7)
+
+# 15mm crack position
+freq15_drops = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows15,
+    nrows=n_rows,
+    usecols=drop_cols,
+)
+
+assert freq15_drops.shape == (12, 7)
+
+# 25mm crack position
+freq25_drops = pd.read_excel(
+    freq_path,
+    sheet_name=freq_sheet,
+    skiprows=skip_rows25,
+    nrows=n_rows,
+    usecols=drop_cols,
+)
+
+assert freq25_drops.shape == (12, 7)
+
+# Group all the amps/freqs vals/drops together in combined dataframes
+val_amp = [amp5_vals, amp15_vals, amp25_vals]
+drop_amp = [amp5_drops, amp15_drops, amp25_drops]
+
+val_freq = [freq5_vals, freq15_vals, freq25_vals]
+drop_freq = [freq5_drops, freq15_drops, freq25_drops]
+
+amp = pd.concat(val_amp, ignore_index=True)
+amp_drop = pd.concat(drop_amp, ignore_index=True)
+
+freq = pd.concat(val_freq, ignore_index=True)
+freq_drop = pd.concat(drop_freq, ignore_index=True)
+
+# Set what the columns refer to in each case
+val_col_list = [&#34;x&#34;, 22, &#34;CD/t&#34;, 50, 100, 150, 200]
+drop_col_list = [&#34;x&#34;, &#34;CD/t&#34;, 22, 50, 100, 150, 200]
+
+freq.columns = val_col_list
+amp.columns = val_col_list
+
+freq_drop.columns = drop_col_list
+amp_drop.columns = drop_col_list
+
+# Now for a bit of reording to make the value ones more readable, the drop ones are already in this order
+freq = freq[[&#34;x&#34;, &#34;CD/t&#34;, 22, 50, 100, 150, 200]]
+amp = amp[[&#34;x&#34;, &#34;CD/t&#34;, 22, 50, 100, 150, 200]]
+
+
+nf = pd.melt(freq, id_vars=[&#34;x&#34;, &#34;CD/t&#34;], var_name=&#34;temp&#34;, value_name=&#34;nf_hz&#34;)
+nfdrop = pd.melt(
+    freq_drop, id_vars=[&#34;x&#34;, &#34;CD/t&#34;], var_name=&#34;temp&#34;, value_name=&#34;nf_drop&#34;
+)
+
+amp = pd.melt(amp, id_vars=[&#34;x&#34;, &#34;CD/t&#34;], var_name=&#34;temp&#34;, value_name=&#34;amp_mm&#34;)
+ampdrop = pd.melt(
+    amp_drop, id_vars=[&#34;x&#34;, &#34;CD/t&#34;], var_name=&#34;temp&#34;, value_name=&#34;amp_drop&#34;
+)
+
+# Finally, combine them all into one master dataframe
+master = nf
+master[&#34;nf_drop&#34;] = nfdrop[&#34;nf_drop&#34;]
+master[&#34;amp_mm&#34;] = amp[&#34;amp_mm&#34;]
+master[&#34;amp_drop&#34;] = ampdrop[&#34;amp_drop&#34;]
+
+# If this passes, the data was manipulated and processed correctly
+assert master.shape == (180, 7)
+
+# Save the processed version as a csv file
+file_name = PROCESSED_DATA / &#34;processed_combined.csv&#34;
+
+if not Path.exists(file_name):
+    master.to_csv(file_name, index=False)
+    print(f&#34;Saved file: {file_name}&#34;)
+
+# Now onto generating the polynomial features to recreate the paper&#39;s model
+data = pd.read_csv(file_name)
+
+# Only need frequency drop and temperature as these are the base features
+freq = data.drop([&#34;x&#34;, &#34;CD/t&#34;, &#34;nf_hz&#34;, &#34;amp_mm&#34;, &#34;amp_drop&#34;], axis=1)
+amp = data.drop([&#34;x&#34;, &#34;CD/t&#34;, &#34;nf_hz&#34;, &#34;nf_drop&#34;, &#34;amp_mm&#34;], axis=1)
+
+# Reorder columns to make the matrix math work
+freq = freq[[&#34;nf_drop&#34;, &#34;temp&#34;]]
+amp = amp[[&#34;amp_drop&#34;, &#34;temp&#34;]]
+
+# Generate the polynomial features on both the freq and amp dataframes
+poly_features = PolynomialFeatures(degree=3, include_bias=False)
+
+freq_poly = poly_features.fit_transform(freq)
+amp_poly = poly_features.fit_transform(amp)
+
+freq_poly = pd.DataFrame(freq_poly)
+amp_poly = pd.DataFrame(amp_poly)
+
+# Drop the 8 column as it refers to T^3 which is not used in the matrix dot product stage
+freq_poly.drop(8, axis=1, inplace=True)
+amp_poly.drop(8, axis=1, inplace=True)
+
+# Add the x column back in so we can index off it
+freq_poly[&#34;x&#34;] = data[&#34;x&#34;]
+amp_poly[&#34;x&#34;] = data[&#34;x&#34;]
+
+# Break it up into chunks corresponding to 5mm, 15mm and 25mm to be later matched in matrix math to the relevant coeff
+# Then drop the &#39;x&#39; as it&#39;s not used in the actual dot product
+freq_5 = freq_poly.loc[freq_poly[&#34;x&#34;] == 5].drop(&#34;x&#34;, axis=1).values
+freq_15 = freq_poly.loc[freq_poly[&#34;x&#34;] == 15].drop(&#34;x&#34;, axis=1).values
+freq_25 = freq_poly.loc[freq_poly[&#34;x&#34;] == 25].drop(&#34;x&#34;, axis=1).values
+
+amp_5 = amp_poly.loc[amp_poly[&#34;x&#34;] == 5].drop(&#34;x&#34;, axis=1).values
+amp_15 = amp_poly.loc[amp_poly[&#34;x&#34;] == 15].drop(&#34;x&#34;, axis=1).values
+amp_25 = amp_poly.loc[amp_poly[&#34;x&#34;] == 25].drop(&#34;x&#34;, axis=1).values
+
+# Assertions to confirm the right bits of data were allocated
+assert len(freq_5) == 60
+assert len(freq_15) == 60
+assert len(freq_25) == 60
+
+assert len(amp_5) == 60
+assert len(amp_15) == 60
+assert len(amp_25) == 60
+
+
+# Same for coeffs
+# Save the constant A&#39;s first
+# Frequency A&#39;s
+A_freq_5, A_freq_15, A_freq_25 = (0.9367, 0.8726, 0.8574)
+# Amplitude A&#39;s
+A_amp_5, A_amp_15, A_amp_25 = (0.5348, -0.1923, -0.5979)
+
+
+# Frequency coefficients, taken directly from the paper
+coefs_freq_5 = np.array(
+    [
+        0.359,
+        -0.01433,
+        -0.01637,
+        -0.001936,
+        0.0001338,
+        -0.0001470,
+        0.0002067,
+        -0.0000129,
+    ]
+)
+coefs_freq_15 = np.array(
+    [
+        0.3701000,
+        -0.0110600,
+        -0.0182800,
+        -0.0021360,
+        0.0001200,
+        -0.0000519,
+        0.0002018,
+        -0.0000117,
+    ]
+)
+coefs_freq_25 = np.array(
+    [
+        0.3973000,
+        -0.0089170,
+        -0.0222300,
+        -0.0023310,
+        0.0001143,
+        0.0001004,
+        0.0002062,
+        -0.0000115,
+    ]
+)
+
+
+# Amplitude coefficients, taken directly from the paper
+coefs_amp_5 = np.array(
+    [
+        0.6342000,
+        0.0036250,
+        0.0874400,
+        -0.0119300,
+        0.0000120,
+        -0.0101300,
+        -0.0015330,
+        0.0000241,
+    ]
+)
+coefs_amp_15 = np.array(
+    [
+        0.3510000,
+        0.0205600,
+        0.0629000,
+        -0.0078400,
+        -0.0000419,
+        -0.0083890,
+        -0.0010900,
+        -0.0000223,
+    ]
+)
+coefs_amp_25 = np.array(
+    [
+        0.1834000,
+        0.0276500,
+        0.0908900,
+        -0.0004958,
+        -0.0000509,
+        -0.0029020,
+        -0.0005170,
+        0.0000102,
+    ]
+)
+
+
+# Now do the dot products
+tc_pred_freq_5 = A_freq_5 + np.dot(freq_5, coefs_freq_5)
+tc_pred_freq_15 = A_freq_15 + np.dot(freq_15, coefs_freq_15)
+tc_pred_freq_25 = A_freq_25 + np.dot(freq_25, coefs_freq_25)
+tc_pred_amp_5 = A_amp_5 + np.dot(amp_5, coefs_amp_5)
+tc_pred_amp_15 = A_amp_15 + np.dot(amp_15, coefs_amp_15)
+tc_pred_amp_25 = A_amp_25 + np.dot(amp_25, coefs_amp_25)
+
+
+# Add all the predictions into two 180 long 1D arrays, ready for merging back into the dataframe
+tc_preds_freq = np.concatenate((tc_pred_freq_5, tc_pred_freq_15, tc_pred_freq_25))
+
+assert tc_preds_freq.shape == (180,)
+
+tc_preds_amp = np.concatenate((tc_pred_amp_5, tc_pred_amp_15, tc_pred_amp_25))
+
+assert tc_preds_amp.shape == (180,)
+
+
+data[&#34;tc_pred_freq&#34;] = tc_preds_freq
+data[&#34;tc_pred_amp&#34;] = tc_preds_amp
+
+# Add a column to hold the actual crack depth (from the CD/t column)
+# We know the specimens were all 3mm thick
+data[&#34;tc_act&#34;] = data[&#34;CD/t&#34;].apply(lambda x: x * 3)
+
+# Save the output data as a csv
+file_name = PROCESSED_DATA / &#34;full_with_poly_preds.csv&#34;
+
+if not Path.exists(file_name):
+    data.to_csv(file_name, index=False)
+    print(f&#34;Saved file {file_name}&#34;)
+
+# Generate final data to input into modelling
+final_df = process_data_final(
+    cols=[&#34;CD/t&#34;, &#34;tc_pred_freq&#34;, &#34;tc_pred_amp&#34;, &#34;amp_drop&#34;, &#34;nf_drop&#34;]
+)
+
+file_name = FINAL_DATA / &#34;al_data_final.csv&#34;
+
+if not Path.exists(file_name):
+    final_df.to_csv(file_name, index=False)
+    print(f&#34;Saved file {file_name}&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#required-inputs">Required Inputs</a></li>
+<li><a href="#outputs">Outputs</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.data" href="index.html">src.data</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
